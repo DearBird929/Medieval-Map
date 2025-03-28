@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sergio CM - Portafolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <nav>
+        <a href="#mapa">Mapa</a>
+        <a href="#tops">Tops</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h1>Mapa de BirdWorld</h1>
+    <div class="mapa-container" id="mapa-container">
+        <img id="mapa" class="mapa" src="mapa.jpg" alt="Mapa del mundo medieval">
+        <div class="pin" data-left="13.5" data-top="16" data-description="Salazar">
+            <img src="pin.png" alt="Pin en el mapa - Punto de interés 1">
+        </div>
+        <div class="pin" data-left="50" data-top="40" data-description="Alexandreum">
+            <img src="pin.png" alt="Pin en el mapa - Punto de interés 2">
+        </div>
+        <div class="pin" data-left="29" data-top="80" data-description="Akeron">
+            <img src="pin.png" alt="Pin en el mapa - Punto de interés 3">
+        </div>
+        <div class="pin" data-left="20.5" data-top="46" data-description="Santa Barbara">
+            <img src="pin.png" alt="Pin en el mapa - Punto de interés 4">
+        </div>
+        <div class="pin" data-left="74" data-top="53" data-description="Themiscyra">
+            <img src="pin.png" alt="Pin en el mapa - Punto de interés 5">
+        </div>
+    </div>
+
+    <section id="tops" class="columns">
+        <div class="column">
+            <h2>Comandantes (Suscriptores)</h2>
+            <p id="total-subs">Total suscriptores: 0</p>
+        </div>
+        <div class="column">
+            <h2>Ciudadanos (Seguidores)</h2>
+            <p id="total-followers">Total seguidores: 0</p>
+        </div>
+    </section>
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const mapa = document.getElementById("mapa");
+
+    function posicionarPines() {
+        const anchoMapa = mapa.clientWidth; // Ancho actual del mapa
+        const altoMapa = mapa.clientHeight; // Alto actual del mapa
+
+        document.querySelectorAll(".pin").forEach(pin => {
+            const left = parseFloat(pin.getAttribute("data-left")); // Posición relativa en porcentaje
+            const top = parseFloat(pin.getAttribute("data-top")); // Posición relativa en porcentaje
+
+            // Calcular posiciones absolutas basadas en el tamaño actual del mapa
+            pin.style.left = (left / 100) * anchoMapa + "px";
+            pin.style.top = (top / 100) * altoMapa + "px";
+        });
+    }
+
+    // Recalcular posiciones al cargar la página y al redimensionar la ventana
+    window.addEventListener("resize", posicionarPines);
+    posicionarPines();
+});
+    </script>
+
+</div>
+</body>
+</html>

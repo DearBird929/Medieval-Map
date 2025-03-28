@@ -1,3 +1,5 @@
+/* General */
+
 body {
     font-family: 'Georgia', serif;
     background: linear-gradient(to bottom, #0d0d0d, #1a1a1a);
@@ -27,7 +29,7 @@ nav a {
     justify-content: center; /* Centrar horizontalmente */
     align-items: center; /* Alinear el contenido al inicio verticalmente */
     flex-direction: column; /* Asegura que los elementos estén en columna */
-    margin: 100px auto 0; /* Añade un margen superior para evitar que el contenido cubra el menú */
+    margin: 50px auto 0; /* Añade un margen superior para evitar que el contenido cubra el menú */
     padding: 0 20px; /* Opcional: Añade un poco de espacio lateral */
     width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
     max-width: 800px; /* Limita el ancho máximo del contenido */
@@ -85,4 +87,68 @@ nav a {
     border: 1px solid black;
     font-size: 14px;
     white-space: nowrap;
+}
+
+
+/* Mapa ciudad */
+
+#mapa-ciudad {
+    display: flex;
+    flex-direction: column; /* Asegura que el texto y el mapa estén en columna */
+    justify-content: center; /* Centra verticalmente */
+    align-items: center; /* Centra horizontalmente */
+    text-align: center; /* Centra el texto */
+    margin-top: 50px; /* Ajusta el margen superior para separar del menú */
+    padding: 20px; /* Opcional: Añade un poco de espacio interno */
+}
+
+.mapa-ciudad-container {
+    position: relative;
+    display: flex;
+    justify-content: center; /* Centra el mapa horizontalmente */
+    align-items: center; /* Centra el mapa verticalmente */
+    margin-top: 20px; /* Espacio entre el título y el mapa */
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    box-sizing: border-box;
+}
+
+.mapa-ciudad-image {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+}
+.building {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.building img {
+width: 100%; /* Ajusta el ancho al contenedor */
+height: auto; /* Mantén la proporción */
+display: block; /* Asegura que se comporte como un bloque */
+margin: 0 auto; /* Centra la imagen horizontalmente */
+}
+.building:hover {
+    transform: scale(1.2);
+}
+.tooltip {
+    display: none;
+    position: absolute;
+    background: white;
+    padding: 5px;
+    border: 1px solid black;
+    font-size: 14px;
+    white-space: nowrap;
+    text-align: center;
+}
+.tooltip img {
+    width: 100px;
+    height: auto;
+    display: block;
+    margin: 5px auto;
 }

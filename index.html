@@ -34,42 +34,101 @@
             <img src="pin.png" alt="Pin en el mapa - Punto de interés 5">
         </div>
     </div>
+</div>
 
-    <section id="tops" class="columns">
-        <div class="column">
-            <h2>Comandantes (Suscriptores)</h2>
-            <p id="total-subs">Total suscriptores: 0</p>
+<section id="tops" class="columns">
+    <div class="column">
+        <h2>Comandantes (Suscriptores)</h2>
+        <p id="total-subs">Total suscriptores: 0</p>
+    </div>
+    <div class="column">
+        <h2>Ciudadanos (Seguidores)</h2>
+        <p id="total-followers">Total seguidores: 0</p>
+    </div>
+</section>
+
+<section id="mapa-ciudad">
+    <h1>Mapa Interactivo de la Ciudad</h1>
+    <div class="mapa-ciudad-container" id="mapaCiudadContainer">
+        <img src="city.jpeg" alt="Mapa de la Ciudad" class="mapa-ciudad-image" id="mapaCiudadImage">
+        
+        <!-- Edificios -->
+        <div class="building" style="left: 200px; top: 150px;" data-image="pin.png" data-url="https://ejemplo.com/iglesia">
+            <img src="pin.png" alt="Edificio Iglesia">
         </div>
-        <div class="column">
-            <h2>Ciudadanos (Seguidores)</h2>
-            <p id="total-followers">Total seguidores: 0</p>
+        <div class="building" style="left: 400px; top: 300px;" data-image="ayuntamiento.jpg" data-url="https://ejemplo.com/ayuntamiento">
+            <img src="pin.png" alt="Edificio Ayuntamiento">
         </div>
-    </section>
+        <div class="building" style="left: 600px; top: 250px;" data-image="biblioteca.jpg" data-url="https://ejemplo.com/biblioteca">
+            <img src="pin.png" alt="Edificio Biblioteca">
+        </div>
+    </div>
+</section>
 
-    <script>
-document.addEventListener("DOMContentLoaded", () => {
-    const mapa = document.getElementById("mapa");
-
+<script>
+    // Función para posicionar pines en el mapa de BirdWorld
     function posicionarPines() {
-        const anchoMapa = mapa.clientWidth; // Ancho actual del mapa
-        const altoMapa = mapa.clientHeight; // Alto actual del mapa
+        const mapa = document.getElementById("mapa");
+        if (!mapa) return;
+
+        const anchoMapa = mapa.clientWidth;
+        const altoMapa = mapa.clientHeight;
 
         document.querySelectorAll(".pin").forEach(pin => {
-            const left = parseFloat(pin.getAttribute("data-left")); // Posición relativa en porcentaje
-            const top = parseFloat(pin.getAttribute("data-top")); // Posición relativa en porcentaje
+            const left = parseFloat(pin.getAttribute("data-left"));
+            const top = parseFloat(pin.getAttribute("data-top"));
 
-            // Calcular posiciones absolutas basadas en el tamaño actual del mapa
-            pin.style.left = (left / 100) * anchoMapa + "px";
-            pin.style.top = (top / 100) * altoMapa + "px";
+            if (!isNaN(left) && !isNaN(top)) {
+                pin.style.left = (left / 100) * anchoMapa + "px";
+                pin.style.top = (top / 100) * altoMapa + "px";
+            }
         });
     }
 
-    // Recalcular posiciones al cargar la página y al redimensionar la ventana
-    window.addEventListener("resize", posicionarPines);
-    posicionarPines();
-});
-    </script>
+    // Función para inicializar los tooltips en el mapa de la ciudad
+    function inicializarMapaCiudad() {
+        const mapaCiudadImage = document.getElementById("mapaCiudadImage");
+        if (!mapaCiudadImage) return;
 
-</div>
+        document.querySelectorAll('.building').forEach(building => {
+            const imageName = building.getAttribute('data-image');
+            const buildingName = imageName ? imageName.split('.')[0].charAt(0).toUpperCase() + imageName.split('.')[0].slice(1) : '';
+
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip';
+            tooltip.innerHTML = `<img src="${imageName}" alt="${buildingName}"><br>${buildingName}`;
+            document.body.appendChild(tooltip);
+
+            building.addEventListener('mouseenter', function (event) {
+                tooltip.style.display = 'block';
+                tooltip.style.left = (event.pageX + 10) + 'px';
+                tooltip.style.top = (event.pageY + 10) + 'px';
+                mapaCiudadImage.style.filter = 'blur(3px)';
+            });
+
+            building.addEventListener('mouseleave', function () {
+                tooltip.style.display = 'none';
+                mapaCiudadImage.style.filter = 'none';
+            });
+
+            building.addEventListener('mousemove', function (event) {
+                tooltip.style.left = (event.pageX + 10) + 'px';
+                tooltip.style.top = (event.pageY + 10) + 'px';
+            });
+
+            building.addEventListener('click', function () {
+                const url = building.getAttribute('data-url');
+                if (url) window.location.href = url;
+            });
+        });
+    }
+
+    // Inicializar mapas al cargar la página
+    document.addEventListener("DOMContentLoaded", () => {
+        posicionarPines();
+        inicializarMapaCiudad();
+        window.addEventListener("resize", posicionarPines);
+    });
+</script>
 </body>
 </html>
